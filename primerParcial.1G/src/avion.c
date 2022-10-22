@@ -83,3 +83,33 @@ int buscarAvionPorId(eAvion* lista, int idComparar ,int tam, int *pPos)
 
 	return retorno;
 }
+/*int ordenarAvionTipoyId(eAvion *aviones, int tam, eTipo *tipos,int tamTipos)
+{
+	int retorno = 0;
+	eAvion auxMoto;
+	char descripcionA[20];
+	char descripcionJ[20];
+
+	if(aviones != NULL && tam >0)
+	{
+		for(int i = 0; i<tam-1;i++)
+		{
+			for(int j= i+1; j<tam;j++ )
+			{
+				cargarDescripcionTipo((aviones + i)->idTipo, tipos, tamTipos, descripcionI);
+				cargarDescripcionAerolonea(int idComparar , eAerolinea *lista, int tamLista, char *descripcion)
+				cargarDescripcionTipo((aviones + j)->idTipo, tipos, tamTipos, descripcionJ);
+
+				if(strcmp(descripcionI, descripcionJ)>0 ||(strcmp(descripcionI, descripcionJ) == 0 &&
+						(aviones + i)->id > (aviones + j)->id))
+				{
+					auxMoto = *(aviones + i);
+					*(aviones + i) = *(aviones + j);
+					*(aviones + j) = auxMoto;
+				}
+			}
+		}
+		retorno =1;
+	}
+	return retorno;
+}*/

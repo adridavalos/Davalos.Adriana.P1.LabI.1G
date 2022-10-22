@@ -64,8 +64,9 @@ int main(void) {
 				break;
 
 			case 'B':
-				if(modificarAvion(aviones, TAM_LISTA_AVIONES, aerolineas , TAM_LISTA_AEROLINEA, tipos, TAM_LISTA_TIPOS) && flagAltaAerolinea)
+				if(flagAltaAerolinea)
 				{
+					modificarAvion(aviones, TAM_LISTA_AVIONES, aerolineas , TAM_LISTA_AEROLINEA, tipos, TAM_LISTA_TIPOS);
 					printf("\n¡Modificacion exitosa!");
 				}else
 				{
@@ -76,12 +77,13 @@ int main(void) {
 				break;
 
 			case 'C':
-				if(bajaAvion(aviones, TAM_LISTA_AVIONES, aerolineas , TAM_LISTA_AEROLINEA, tipos, TAM_LISTA_TIPOS) && flagAltaAerolinea)
+				if(flagAltaAerolinea)
 				{
+					bajaAvion(aviones, TAM_LISTA_AVIONES, aerolineas , TAM_LISTA_AEROLINEA, tipos, TAM_LISTA_TIPOS);
 					printf("\n¡Baja exitosa!");
 				}else
 				{
-					printf("\nError, no realizar la baja");
+					printf("\nError, no se pudo realizar la baja");
 
 				}
 
