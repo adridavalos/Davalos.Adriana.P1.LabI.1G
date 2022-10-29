@@ -8,7 +8,7 @@
 
 #include "abmAvion.h"
 
-int altaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos, int *pId)
+int altaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos, ePiloto *listaPilotos, int tamPilotos, int *pId)
 {
 	int retorno = 0;
 	int indiceLibre;
@@ -16,7 +16,7 @@ int altaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int 
 	if(listaAvion != NULL && tamAvion > 0 &&  listaAerolinea != NULL && tamAerolinea > 0 && listaTipos !=NULL && tamTipos > 0 && pId != NULL)
 	{
 		printf("   **** ALTA AEROLINEA ****\n");
-		indiceLibre = buscarLibre(listaAvion ,tamAvion);
+		indiceLibre = buscarLibreAvion(listaAvion ,tamAvion);
 
 		if(indiceLibre == -1)
 		{
@@ -43,22 +43,25 @@ int altaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int 
 
 			}while(auxAvion.capacidad < 10 || auxAvion.capacidad > 300);
 
+			do{
+				mostrarPiloto(listaPilotos,tamPilotos);
+			}while(!utn_getEnteroSoloNumeros(&auxAvion.idPiloto, 6, "Ingrese id: ",
+					"Error, intente nuevamente", 3) &&
+					!buscarIdExistentePiloto(listaPilotos, auxAvion.idPiloto ,tamPilotos));
+
 			auxAvion.isEmpty =0;
 			*(listaAvion + indiceLibre) = auxAvion;
 			retorno = 1;
-
 		}
-
 	}
-
-
 	return retorno;
 }
-int modificarAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos)
+int modificarAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos,ePiloto *listaPilotos, int tamPilotos)
 {
 	int retorno = 0;
 	eAvion auxAvion;
 	int opcion;
+	int indiceAvion;
 	char confirma = 'n';
 	if(listaAvion != NULL && tamAvion > 0 &&  listaAerolinea != NULL && tamAerolinea > 0 && listaTipos !=NULL && tamTipos > 0)
 	{
@@ -73,43 +76,42 @@ int modificarAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea,
 
 		do{
 
-			mostrarAviones(listaAvion, tamAvion,listaAerolinea, tamAerolinea, listaTipos,tamTipos);
+			mostrarAviones(listaAvion, tamAvion,listaAerolinea, tamAerolinea, listaTipos,tamTipos,listaPilotos,tamPilotos);
 
 		}while(!utn_getEnteroSoloNumeros(&auxAvion.id, 20, "Ingrese el id : ",
 				"Error, intente nuevamente", 3) &&
-				!buscarIdExistenteAvion(listaAvion, auxAvion.id ,tamAvion));
-		mostrarAvion(listaAvion, listaAerolinea, tamAerolinea, listaTipos, tamTipos);
-		printf("\n¿Confirma moto seleccionada?: ");
+				!buscarAvionPorId(listaAvion, auxAvion.id ,tamAvion, &indiceAvion));
+		mostrarAvion((listaAvion + indiceAvion), listaAerolinea, tamAerolinea, listaTipos, tamTipos,listaPilotos,tamPilotos);
+		printf("\n¿Confirma opcion seleccionada?: s/n ");
 		__fpurge(stdin);
 		scanf("%c", &confirma);
 
-		if(opcion == 1)
-		{
-			do{
-				mostrarTipos(listaTipos,tamTipos);
-			}while(!utn_getEnteroSoloNumeros(&auxAvion.idTipo, 6, "Ingrese id tipo: ",
-					"Error, intente nuevamente", 3) &&
-					!buscarIdExistenteTipo(listaTipos, auxAvion.idTipo ,tamTipos));
-			listaAvion->idTipo = auxAvion.idTipo;
+		if(confirma == 's' || confirma =='S'){
+			if(opcion == 1 )
+			{
+				do{
+					mostrarTipos(listaTipos,tamTipos);
+				}while(!utn_getEnteroSoloNumeros(&auxAvion.idTipo, 6, "Ingrese id tipo: ",
+						"Error, intente nuevamente", 3) &&
+						!buscarIdExistenteTipo(listaTipos, auxAvion.idTipo ,tamTipos));
+				(listaAvion + indiceAvion)->idTipo = auxAvion.idTipo;
 
-			retorno =1;
-		}else
-		{
-			do{
-				utn_getEnteroSoloNumeros(&auxAvion.capacidad, 4, "Ingrese Capacidad (10-300): ",
-						"Error, intente nuevamente", 3);
+				retorno =1;
+			}else
+			{
+				do{
+					utn_getEnteroSoloNumeros(&auxAvion.capacidad, 4, "Ingrese Capacidad (10-300): ",
+							"Error, intente nuevamente", 3);
 
-			}while(auxAvion.capacidad < 10 || auxAvion.capacidad > 300);
-			listaAvion->capacidad = auxAvion.capacidad;
-			retorno =1;
+				}while(auxAvion.capacidad < 10 || auxAvion.capacidad > 300);
+				(listaAvion + indiceAvion)->capacidad = auxAvion.capacidad;
+				retorno =1;
+			}
 		}
-
-
 	}
-
 	return retorno;
 }
-int bajaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos)
+int bajaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int tamAerolinea, eTipo *listaTipos, int tamTipos,ePiloto *listaPilotos, int tamPilotos)
 {
 	int retorno = 0;
 	eAvion auxAvion;
@@ -120,14 +122,14 @@ int bajaAvion(eAvion *listaAvion, int tamAvion, eAerolinea *listaAerolinea, int 
 		printf("  ****BAJA AVION ****\n");
 		do{
 
-			mostrarAviones(listaAvion, tamAvion,listaAerolinea, tamAerolinea, listaTipos,tamTipos);
+			mostrarAviones(listaAvion, tamAvion,listaAerolinea, tamAerolinea, listaTipos,tamTipos,listaPilotos,tamPilotos);
 
 		}while(!utn_getEnteroSoloNumeros(&auxAvion.id, 20, "Ingrese el id : ",
 				"Error, intente nuevamente", 3) &&
 				!buscarAvionPorId(listaAvion, auxAvion.id ,tamAvion, &indiceAvion));
-		mostrarAvion((listaAvion + indiceAvion), listaAerolinea, tamAerolinea, listaTipos, tamTipos);
+		mostrarAvion((listaAvion + indiceAvion), listaAerolinea, tamAerolinea, listaTipos, tamTipos,listaPilotos,tamPilotos);
 
-		printf("\n¿Confirma baja?: ");
+		printf("\n¿Confirma baja? s/n: ");
 		__fpurge(stdin);
 		scanf("%c", &confirma);
 		if(confirma == 's' || confirma =='S')

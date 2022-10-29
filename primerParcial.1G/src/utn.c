@@ -452,6 +452,7 @@ int utn_getFecha(   int *dia,int *mes, int *anio, int limite, char *mensaje,
             	*dia =auxDia;
             	*mes = auxMes;
             	*anio = auxAnio;
+            	retorno = 0;
 
                 break;
             }

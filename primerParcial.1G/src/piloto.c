@@ -1,14 +1,12 @@
 /*
- * aerilinea.c
+ * piloto.c
  *
- *  Created on: Oct 21, 2022
+ *  Created on: Oct 28, 2022
  *      Author: advalos
  */
 
-
-#include "aerolinea.h"
-
-int buscarIdExistenteAerolinea(eAerolinea* lista, int idComparar ,int tam)
+#include "piloto.h"
+int buscarIdExistentePiloto(ePiloto* lista, int idComparar ,int tam)
 {
 	int retorno = 0;
 
@@ -30,7 +28,7 @@ int buscarIdExistenteAerolinea(eAerolinea* lista, int idComparar ,int tam)
 
 	return retorno;
 }
-int cargarDescripcionAerolinea(int idComparar , eAerolinea *lista, int tamLista, char *descripcion)
+int cargarDescripcionPiloto(int idComparar , ePiloto *lista, int tamLista, char *descripcion)
 {
 	int retorno =0;
 	if(idComparar > 0 && lista != NULL && descripcion != NULL)
@@ -39,7 +37,7 @@ int cargarDescripcionAerolinea(int idComparar , eAerolinea *lista, int tamLista,
 		{
 			if(idComparar == (lista+ i)->id)
 			{
-				strcpy(descripcion,(lista+ i)->descripcion);
+				strcpy(descripcion,(lista+ i)->nombre);
 				retorno = 1;
 				break;
 			}

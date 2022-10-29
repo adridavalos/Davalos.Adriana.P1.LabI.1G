@@ -22,7 +22,7 @@ int inicializarAvion(eAvion *lista, int tam)
 
 	return retorno;
 }
-int buscarLibre(eAvion *lista , int tam)
+int buscarLibreAvion(eAvion *lista , int tam)
 {
 	int retorno =-1;
 	if(lista != NULL && tam > 0)
@@ -46,7 +46,7 @@ int buscarIdExistenteAvion(eAvion* lista, int idComparar ,int tam)
 	{
 		for(int i = 0; i < tam; i++)
 		{
-			if((lista +i)->id == idComparar)
+			if((lista +i)->id == idComparar && !(lista + i)->isEmpty)
 			{
 				retorno = 1;
 				break;
@@ -83,33 +83,32 @@ int buscarAvionPorId(eAvion* lista, int idComparar ,int tam, int *pPos)
 
 	return retorno;
 }
-/*int ordenarAvionTipoyId(eAvion *aviones, int tam, eTipo *tipos,int tamTipos)
+int ordenarPorAerolineayCapacidad(eAvion *aviones, int tamAviones, eAerolinea *aerolinea, int tamAero)
 {
 	int retorno = 0;
-	eAvion auxMoto;
-	char descripcionA[20];
+	eAvion auxAvion;
+	char descripcionI[20];
 	char descripcionJ[20];
 
-	if(aviones != NULL && tam >0)
+	if(aviones != NULL && tamAviones >0 && aerolinea != NULL && tamAero >0)
 	{
-		for(int i = 0; i<tam-1;i++)
+		for(int i = 0; i<tamAviones-1;i++)
 		{
-			for(int j= i+1; j<tam;j++ )
+			for(int j= i+1; j<tamAviones;j++ )
 			{
-				cargarDescripcionTipo((aviones + i)->idTipo, tipos, tamTipos, descripcionI);
-				cargarDescripcionAerolonea(int idComparar , eAerolinea *lista, int tamLista, char *descripcion)
-				cargarDescripcionTipo((aviones + j)->idTipo, tipos, tamTipos, descripcionJ);
+				cargarDescripcionAerolinea((aviones + i)->idAerolinea , aerolinea, tamAero, descripcionI);
+				cargarDescripcionAerolinea((aviones + j)->idAerolinea , aerolinea, tamAero, descripcionJ);
 
 				if(strcmp(descripcionI, descripcionJ)>0 ||(strcmp(descripcionI, descripcionJ) == 0 &&
-						(aviones + i)->id > (aviones + j)->id))
+						(aviones + i)->capacidad > (aviones + j)->capacidad))
 				{
-					auxMoto = *(aviones + i);
+					auxAvion = *(aviones + i);
 					*(aviones + i) = *(aviones + j);
-					*(aviones + j) = auxMoto;
+					*(aviones + j) = auxAvion;
 				}
 			}
 		}
 		retorno =1;
 	}
 	return retorno;
-}*/
+}

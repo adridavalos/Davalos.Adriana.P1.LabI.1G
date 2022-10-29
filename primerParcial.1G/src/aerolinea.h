@@ -19,5 +19,5 @@ typedef struct
 }eAerolinea;
 
 int buscarIdExistenteAerolinea(eAerolinea* lista, int idComparar ,int tam);
-int cargarDescripcionAerolonea(int idComparar , eAerolinea *lista, int tamLista, char *descripcion);
+int cargarDescripcionAerolinea(int idComparar , eAerolinea *lista, int tamLista, char *descripcion);
 #endif /* AEROLINEA_H_ */

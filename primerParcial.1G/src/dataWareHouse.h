@@ -12,7 +12,9 @@
 #include<string.h>
 #include <ctype.h>
 #include "avion.h"
+#include "vuelo.h"
 
 int harcodearAvion(eAvion*lista, int tamLista, int cant, int * pId);
+int harcodearVuelos(eVuelo *lista, int tamLista, int cant, int * pId);
 
 #endif /* DATAWAREHOUSE_H_ */
